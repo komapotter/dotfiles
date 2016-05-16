@@ -1,0 +1,40 @@
+[user]
+	name = komapotter
+	email = tora.05.036jp@gmail.com
+[color]
+    ui = true
+[alias]
+    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
+    info = remote show origin
+    a = add .
+    ap = add -p . #with TermReadKey
+    b = branch
+    ba = branch -a
+    co = checkout
+    cob = checkout -b
+    cim = commit --message
+    civ = commit --verbose
+    d = diff
+    dc = diff --cached
+    ds = diff --stat
+    f = fetch --prune
+    g = grep -nH -i --color
+    graph = !"git log3"
+    log1 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)-- %an%C(reset)%C(bold blue)%d%C(reset)' --abbrev-commit --date=relative
+    log2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold blue)%d%C(reset)%n''          %C(white)%s%C(reset) %C(bold white)― %an%C(reset)' --abbrev-commit
+    log3 = log --graph --date-order -C -M --pretty='format:<%h> %ad [%an] %Cgreen%d%Creset %s' --all --date=short
+    log4 = log --graph --pretty='format:%C(yellow)%h%Cblue%d%Creset %s %C(black bold)%an, %ar%Creset'
+    ls = log --stat
+    mg = merge
+    mgs = merge --squash
+    mgn = merge --no-ff
+    ps = push
+    rb = rebase
+    s = status --short
+    sgraph = !"git log --oneline --graph"
+[url "https://"]
+	insteadOf = git://
+[http]
+	postBuffer = 524288000
+[core]
+	autocrlf = input
