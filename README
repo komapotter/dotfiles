@@ -3,3 +3,4 @@
 3. git clone https://github.com/Shougo/neobundle.vim.git ~/.vim/neobundle.vim.git
 4. vim
 5. :NeoBundleInstall
+6. :GoUpdateBinaries

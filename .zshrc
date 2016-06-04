@@ -50,7 +50,7 @@ myabbrev=(
    "lm"      "| more"
    "lg"      "| grep -i"
    "lsg"     "ls | grep -i"
-   "lr"      "ll -tra"
+   "lr"      "ls -ltra"
    "pg"      "ps auxwwf | grep -i"
    "psm"     "ps auxwwf | sort | more"
    "ns"      "netstat -anlp"
@@ -146,3 +146,6 @@ function ssh_screen(){
 if [ x$TERM = xscreen ]; then
 	alias lssh=ssh_screen
 fi
+
+## aws-cli
+source /usr/local/bin/aws_zsh_completer.sh

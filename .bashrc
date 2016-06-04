@@ -12,7 +12,7 @@ if [ "$PS1" ]; then
 	PS1='\[\033[1;32m\]\u@\h \[\033[1;34m\]\W \$ \[\033[0m\]'
 fi
 set -o vi
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export GOBIN=$HOME/go/bin
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+export GOROOT=`go env GOROOT`
+export GOPATH=$HOME/Development/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin:$GOBIN

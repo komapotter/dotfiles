@@ -64,10 +64,11 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "" let NeoBundle manage NeoBundle required! 
 NeoBundle 'https://github.com/Shougo/neobundle.vim'
 "" recommended to install
-"" NeoBundle 'https://github.com/Shougo/vimproc'
+NeoBundle 'https://github.com/Shougo/vimproc'
 "" after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
 NeoBundle 'https://github.com/Shougo/vimshell'
 NeoBundle 'https://github.com/Shougo/unite.vim'
+NeoBundle 'https://github.com/Shougo/unite-outline'
 NeoBundle 'https://github.com/Shougo/neocomplcache'
 NeoBundle 'https://github.com/Shougo/vimfiler'
 NeoBundle 'https://github.com/Shougo/echodoc.git'
@@ -75,6 +76,9 @@ NeoBundle 'https://github.com/Shougo/vinarise.git'
 NeoBundle 'https://github.com/fatih/vim-go.git'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'https://github.com/kmnk/vim-unite-giti.git'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'dgryski/vim-godef'
+NeoBundle 'vim-jp/vim-go-extra'
 "
 "" My Bundles here:
 ""
@@ -410,11 +414,46 @@ vnoremap <silent> ,cal "cy:let @r=substitute(escape(@c,'\/'),"\n",'+','g')<CR>
 "source $VIMRUNTIME/macros/matchit.vim
 
 ""### golang
+set path+=$GOPATH/src/**
 set runtimepath+=$GOROOT/misc/vim
 exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
 inoremap <C-a> <C-x><C-o>
+au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4 completeopt=menu,preview
 au BufRead,BufNewFile *.go set filetype=go
-auto BufWritePre *.go :GoFmt
+au BufWritePre *.go :GoFmt
+au FileType go compiler go
+let g:gofmt_command = 'goimports'
+
+" VimFilerTree {{{
+command! VimFilerTree call VimFilerTree(<f-args>)
+function VimFilerTree(...)
+    let l:h = expand(a:0 > 0 ? a:1 : '%:p:h')
+    let l:path = isdirectory(l:h) ? l:h : ''
+    exec ':VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit ' . l:path
+    wincmd t
+    setl winfixwidth
+endfunction
+autocmd! FileType vimfiler call s:my_vimfiler_settings()
+function! s:my_vimfiler_settings()
+    nmap     <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+    nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<CR>
+    nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<CR>
+endfunction
+
+let my_action = {'is_selectable' : 1}
+function! my_action.func(candidates)
+    wincmd p
+    exec 'split '. a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_split', my_action)
+
+let my_action = {'is_selectable' : 1}
+function! my_action.func(candidates)
+    wincmd p
+    exec 'vsplit '. a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_vsplit', my_action)
+" }}}
 
 "### vim-over
 nnoremap <silent> ,m :OverCommandLine<CR>%s/
