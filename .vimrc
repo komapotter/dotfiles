@@ -415,7 +415,7 @@ vnoremap <silent> ,cal "cy:let @r=substitute(escape(@c,'\/'),"\n",'+','g')<CR>
 
 ""### golang
 set path+=$GOPATH/src/**
-set runtimepath+=$GOROOT/misc/vim
+""set runtimepath+=$GOROOT/misc/vim
 exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
 inoremap <C-a> <C-x><C-o>
 au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4 completeopt=menu,preview
@@ -423,6 +423,10 @@ au BufRead,BufNewFile *.go set filetype=go
 au BufWritePre *.go :GoFmt
 au FileType go compiler go
 let g:gofmt_command = 'goimports'
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
 
 " VimFilerTree {{{
 command! VimFilerTree call VimFilerTree(<f-args>)
