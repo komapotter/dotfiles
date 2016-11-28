@@ -6,16 +6,18 @@
 [alias]
     alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
     info = remote show origin
-    a = add .
-    ap = add -p . #with TermReadKey
+    a = add
+    ap = add -p #with TermReadKey
     b = branch
     ba = branch -a
     co = checkout
     cob = checkout -b
+    cp = cherry-pick
     cim = commit --message
     civ = commit --verbose
     d = diff
     dc = diff --cached
+    dh = diff HEAD~1
     ds = diff --stat
     f = fetch --prune
     g = grep -nH -i --color
@@ -32,6 +34,9 @@
     rb = rebase
     s = status --short
     sgraph = !"git log --oneline --graph"
+    st = stash
+    sl = stash list
+    sp = stash pop
 [url "https://"]
 	insteadOf = git://
 [http]

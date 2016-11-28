@@ -1,13 +1,12 @@
 export EDITOR=/usr/local/bin/vim
 
-alias vi="/usr/local/bin/vim"
+alias vi="vim"
 alias ls="ls -vF"
 alias rm="rm -i"
 alias mv="mv -i"
 alias cp="cp -i"
 alias h="history"
 alias more="less"
-alias zsh="/bin/zsh"
 alias cd="pushd"
 alias p="popd"
 
@@ -31,6 +30,9 @@ setopt prompt_subst
 PROMPT=$'%{[$[31+$RANDOM % 6]m%}%U$HOST'"{%n}%b%(!.#.$)%{[m%}%u "
 #RPROMPT=$'%{[37m%}[%~]%{[m%}'
 
+## completion
+fpath=(~/.zsh/completion $fpath)
+
 ###     auto complete
 autoload -U compinit
 compinit
@@ -51,19 +53,9 @@ myabbrev=(
    "lg"      "| grep -i"
    "lsg"     "ls | grep -i"
    "lr"      "ls -ltra"
-   "pg"      "ps auxwwf | grep -i"
-   "psm"     "ps auxwwf | sort | more"
+   "pg"      "ps aux | grep -i"
+   "psm"     "ps aux | sort | more"
    "ns"      "netstat -anlp"
-#   "gia"     "git add --"
-#   "gic"     "git commit -m '"
-#   "gid"     "git diff"
-#   "gidw"    "git diff --cached"
-#   "gil"     "git log --pretty=short"
-#   "gir"     "git reset --soft HEAD^"
-#   "girw"    "git reset HEAD --"
-#   "gico"    "git checkout HEAD -- "
-#   "gicw"    "git checkout -- "
-#   "gis"     "git status"
 )
 my-expand-abbrev() {
    local left prefix
@@ -84,51 +76,18 @@ if [ "$TERM" = "screen" ]; then
         emulate -L zsh
         local -a cmd; cmd=(${(z)2})
         case $cmd[1] in
-#            fg)
-#                if (( $#cmd == 1 )); then 
-#                    cmd=(builtin jobs -l %+)
-#                else
-#                    cmd=(builtin jobs -l $cmd[2])
-#                fi
-#            ;;
-#            %*) 
-#                cmd=(builtin jobs -l $cmd[1]) 
-#            ;;
-#            ls)
-#                return
-#            ;; 
-#            cd)
-#                if (( $#cmd == 2 )); then
-#                    cmd[1]=$cmd[2]:t
-#                else
-#                    cmd[1]="~" 
-#                fi
-#                change_status_title $cmd[1]
-#                return
-#            ;;
-#            vim|vi|gvim)
-#                if (( $#cmd == 2)); then
-#                  cmd[1]="v:$cmd[2]:t" 
-#                fi
-#                change_status_title $cmd[1]
-#                return
-#            ;;
-            *)
-                change_status_title $cmd[1]:t
+            vim|vi|gvim)
+                if (( $#cmd == 2 )); then
+                    cmd[1]="v:$cmd[2]:t"
+                fi
+                change_status_title $cmd[1]
                 return
-            ;; 
+            ;;
         esac
-
-#        local -A jt; jt=(${(kv)jobtexts})
-#        $cmd >>(
-#            read num rest
-#            cmd=(${(z)${(e):-\$jt$num}})
-#            echo -n "k$cmd[1]:t\\"
-#        ) 2>/dev/null 
      }
 
      precmd () {
-        echo -n "k$(whoami)@$(hostname -s):$1\\"
+        echo -n "k$(whoami)@$(hostname -s):`pwd`\\"
      }
    
      change_status_title() {
@@ -140,8 +99,6 @@ fi
 function ssh_screen(){
 	eval server=\${$#}
     screen -t $server ssh -o ServerAliveInterval=60 "$@"
-#   ip=$(/usr/bin/host $server |grep 'has address' |awk '{print $4}')
-#   screen -t $server ssh -o ServerAliveInterval=60 "$ip"
 }
 if [ x$TERM = xscreen ]; then
 	alias lssh=ssh_screen
@@ -149,3 +106,12 @@ fi
 
 ## aws-cli
 source /usr/local/bin/aws_zsh_completer.sh
+
+## direnv
+eval "$(direnv hook zsh)"
+
+## embulk
+export PATH="$HOME/.embulk/bin:$PATH"
+
+## digdag
+export PATH="$HOME/bin:$PATH"

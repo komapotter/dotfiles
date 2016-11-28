@@ -13,6 +13,6 @@ if [ "$PS1" ]; then
 fi
 set -o vi
 export GOROOT=`go env GOROOT`
-export GOPATH=$HOME/Development/go
+export GOPATH=$HOME/dev/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin:$GOBIN

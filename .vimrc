@@ -36,6 +36,7 @@ set backspace=eol,indent,start
 set virtualedit=all
 set nobackup
 set history=1000
+set hlsearch
 syntax enable
 let g:netrw_altv=1
 
@@ -101,6 +102,8 @@ NeoBundle 'https://github.com/kana/vim-smartchr.git'
 "NeoBundle 'https://github.com/thinca/vim-quickrun'
 "NeoBundle 'davidco/taskpaper'
 NeoBundle 'https://github.com/osyo-manga/vim-over.git'
+NeoBundle 'nginx.vim'
+NeoBundle 'scrooloose/syntastic'
 call neobundle#end()
 
 filetype plugin indent on     " required!
@@ -249,16 +252,16 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
 " ### window width
-nnoremap <C-w><C-w> <C-w>w:call <SID>good_width()<Cr>
-nnoremap <C-w><C-h> <C-w>h:call <SID>good_width()<Cr>
-nnoremap <C-w><C-l> <C-w>l:call <SID>good_width()<Cr>
-nnoremap <C-w><C-j> <C-w>j:call <SID>good_width()<Cr>
-nnoremap <C-w><C-k> <C-w>k:call <SID>good_width()<Cr>
-function! s:good_width()
-    if winwidth(0) < 100
-        vertical resize 100
-    endif
-endfunction
+"nnoremap <C-w><C-w> <C-w>w:call <SID>good_width()<Cr>
+"nnoremap <C-w><C-h> <C-w>h:call <SID>good_width()<Cr>
+"nnoremap <C-w><C-l> <C-w>l:call <SID>good_width()<Cr>
+"nnoremap <C-w><C-j> <C-w>j:call <SID>good_width()<Cr>
+"nnoremap <C-w><C-k> <C-w>k:call <SID>good_width()<Cr>
+"function! s:good_width()
+"    if winwidth(0) < 100
+"        vertical resize 100
+"    endif
+"endfunction
 
 " ### cmdline-window
 nnoremap <sid>(command-line-enter) q:
@@ -427,6 +430,8 @@ au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go'] }
+let g:syntastic_go_checkers = ['go', 'golint']
 
 " VimFilerTree {{{
 command! VimFilerTree call VimFilerTree(<f-args>)
