@@ -49,8 +49,8 @@ bindkey '^R' history-incremental-search-backward
 ###     OnDemand alias
 typeset -A myabbrev
 myabbrev=(
-   "lm"      "| more"
-   "lg"      "| grep -i"
+   "lm"      " | more"
+   "lg"      " | grep -i"
    "lsg"     "ls | grep -i"
    "lr"      "ls -ltra"
    "pg"      "ps aux | grep -i"
@@ -108,7 +108,7 @@ fi
 source /usr/local/bin/aws_zsh_completer.sh
 
 ## direnv
-eval "$(direnv hook zsh)"
+#eval "$(direnv hook zsh)"
 
 ## embulk
 export PATH="$HOME/.embulk/bin:$PATH"

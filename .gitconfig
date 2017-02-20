@@ -32,6 +32,7 @@
     mgn = merge --no-ff
     ps = push
     rb = rebase
+    rh = reset HEAD
     s = status --short
     sgraph = !"git log --oneline --graph"
     st = stash

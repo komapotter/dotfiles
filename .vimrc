@@ -80,6 +80,7 @@ NeoBundle 'https://github.com/kmnk/vim-unite-giti.git'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'dgryski/vim-godef'
 NeoBundle 'vim-jp/vim-go-extra'
+NeoBundle 'https://github.com/Townk/vim-autoclose'
 "
 "" My Bundles here:
 ""
@@ -432,6 +433,7 @@ au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go'] }
 let g:syntastic_go_checkers = ['go', 'golint']
+au Filetype go inoremap <expr> = smartchr#loop(' = ', ' := ', ' != ', ' == ')
 
 " VimFilerTree {{{
 command! VimFilerTree call VimFilerTree(<f-args>)
@@ -492,7 +494,8 @@ function! s:unite_settings() "{{{
       call s:unite_hooks[source_name]()
     endif
   endfor
-endfunction"}}}
+endfunction
+"}}}
 
 let s:unite_hooks = {}
 
@@ -503,16 +506,24 @@ function! s:unite_hooks.giti_status() "{{{
   nnoremap <silent><buffer><expr>gc unite#do_action('checkout')
   nnoremap <silent><buffer><expr>gd unite#do_action('diff')
   nnoremap <silent><buffer><expr>gu unite#do_action('unstage')
-endfunction"}}}
+endfunction
+"}}}
 
 function! s:unite_hooks.giti_branch() "{{{
   nnoremap <silent><buffer><expr>d unite#do_action('delete')
   nnoremap <silent><buffer><expr>D unite#do_action('delete_force')
 "  nnoremap <silent><buffer><expr>rd unite#do_action('delete_remote')
 "  nnoremap <silent><buffer><expr>rD unite#do_action('delete_remote_force')
-endfunction"}}}
+endfunction
+"}}}
 
 function! s:unite_hooks.giti_branch_all() "{{{
   call self.giti_branch()
-endfunction"}}}
+endfunction
 "}}}
+
+augroup MyXML
+  autocmd!
+  autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
+  autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
+augroup END

@@ -7,5 +7,6 @@ git clone https://github.com/Shougo/neobundle.vim.git ~/.vim/neobundle.vim.git
 vim
 :NeoBundleInstall
 :GoUpdateBinaries
+gocode set autobuild true
 ```
 
