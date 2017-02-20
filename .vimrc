@@ -434,6 +434,8 @@ au FileType go nmap <leader>c <Plug>(go-coverage)
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go'] }
 let g:syntastic_go_checkers = ['go', 'golint']
 au Filetype go inoremap <expr> = smartchr#loop(' = ', ' := ', ' != ', ' == ')
+au FileType go :highlight goExtraVars cterm=bold ctermfg=6
+au FileType go :match goExtraVars /\<ok\>\|\<err\>/
 
 " VimFilerTree {{{
 command! VimFilerTree call VimFilerTree(<f-args>)
