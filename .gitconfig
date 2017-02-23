@@ -44,3 +44,11 @@
 	postBuffer = 524288000
 [core]
 	autocrlf = input
+[diff]
+	indentHeuristic = on
+[pager]
+	log = diff-highlight | less
+	show = diff-highlight | less
+	diff = diff-highlight | less
+[interactive]
+	diffFilter = diff-highlight

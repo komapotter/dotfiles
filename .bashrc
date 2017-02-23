@@ -16,3 +16,4 @@ export GOROOT=`go env GOROOT`
 export GOPATH=$HOME/dev/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin:$GOBIN
+export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
