@@ -74,6 +74,7 @@ NeoBundle 'https://github.com/Shougo/neocomplcache'
 NeoBundle 'https://github.com/Shougo/vimfiler'
 NeoBundle 'https://github.com/Shougo/echodoc.git'
 NeoBundle 'https://github.com/Shougo/vinarise.git'
+NeoBundle 'https://github.com/Shougo/neomru.vim'
 NeoBundle 'https://github.com/fatih/vim-go.git'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'https://github.com/kmnk/vim-unite-giti.git'
@@ -130,14 +131,19 @@ noremap k gk
 noremap gj j
 noremap gk k
 
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+
 "### paste select
 nnoremap gc `[v`]
 vnoremap gc :<C-u>normal gc<Return>
 onoremap gc :<C-u>normal gc<Return>
 
 "### help
-nnoremap <C-h> :<C-u>help<Space>
-nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><Return>
+"nnoremap <C-h> :<C-u>help<Space>
+"nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><Return>
 
 "### grep
 nnoremap ,gr :<C-u>InnerGrep<Space>
@@ -206,23 +212,24 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 " let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
+"imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+"smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+"inoremap <expr><C-g>     neocomplcache#undo_completion()
+"inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
 " SuperTab like snippets behavior.
 "imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+" inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
+" inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "<CR>"
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 " AutoComplPop like behavior.
@@ -341,7 +348,10 @@ endif
 xnoremap ,se y<Esc>q/<Esc>P<CR>
 
 "### Unite
-noremap <C-l> :Unite buffer file register<CR>
+let g:unite_enable_start_insert = 1
+let g:unite_source_history_yank_enable  = 1
+let g:unite_source_file_mru_limit  =  200
+noremap <C-l> :Unite buffer file file/new file_mru<CR>
 
 "### visual mode select search
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
