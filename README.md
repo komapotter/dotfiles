@@ -1,8 +1,8 @@
 
 ```
-cd ~ && mkdir Development
-git clone https://github.com/komapotter/dotfiles.git ./Development/dotfiles
-sh ./Development/dotfiles/attach.sh
+cd ~ && mkdir dev
+git clone https://github.com/komapotter/dotfiles.git ./dev/dotfiles
+sh ./dev/dotfiles/attach.sh
 git clone https://github.com/Shougo/neobundle.vim.git ~/.vim/neobundle.vim.git
 vim
 :NeoBundleInstall

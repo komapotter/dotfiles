@@ -432,8 +432,7 @@ set path+=$GOPATH/src/**
 ""set runtimepath+=$GOROOT/misc/vim
 exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
 inoremap <C-a> <C-x><C-o>
-au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4 completeopt=menu,preview
-au BufRead,BufNewFile *.go set filetype=go
+au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4 completeopt=menu,preview filetype=go
 au BufWritePre *.go :GoFmt
 au FileType go compiler go
 let g:go_fmt_command = 'goimports'
@@ -539,3 +538,21 @@ augroup MyXML
   autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
   autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
 augroup END
+
+""### html
+au BufNewFile,BufRead *.html set sw=2 expandtab ts=2 completeopt=menu,preview filetype=html
+
+""### vue.js
+au BufNewFile,BufRead *.vue set sw=2 expandtab ts=2 completeopt=menu,preview filetype=html
+
+""### js
+au BufNewFile,BufRead *.js set sw=2 expandtab ts=2 completeopt=menu,preview filetype=javascript
+
+""### css
+au BufNewFile,BufRead *.css set sw=2 expandtab ts=2 completeopt=menu,preview filetype=css
+
+""### json
+au BufNewFile,BufRead *.json set sw=2 expandtab ts=2 completeopt=menu,preview filetype=json
+
+""### yaml
+au BufNewFile,BufRead *.yaml set sw=2 expandtab ts=2 completeopt=menu,preview filetype=yaml
