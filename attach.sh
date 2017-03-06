@@ -1,11 +1,11 @@
-ln -sf ./dev/dotfiles/.bash_logout  ~/.bash_logout
-ln -sf ./dev/dotfiles/.bash_profile ~/.bash_profile
-ln -sf ./dev/dotfiles/.bashrc       ~/.bashrc
-ln -sf ./dev/dotfiles/.gitconfig    ~/.gitconfig
-ln -sf ./dev/dotfiles/.screenrc     ~/.screenrc
-ln -sf ./dev/dotfiles/.vimrc        ~/.vimrc
-ln -sf ./dev/dotfiles/.zshrc        ~/.zshrc
-mkdir ~/bin && ln -sf ./dev/dotfiles/misc/pero     ~/bin/pero
+ln -sf ./dev/misc/dotfiles/.bash_logout  ~/.bash_logout
+ln -sf ./dev/misc/dotfiles/.bash_profile ~/.bash_profile
+ln -sf ./dev/misc/dotfiles/.bashrc       ~/.bashrc
+ln -sf ./dev/misc/dotfiles/.gitconfig    ~/.gitconfig
+ln -sf ./dev/misc/dotfiles/.screenrc     ~/.screenrc
+ln -sf ./dev/misc/dotfiles/.vimrc        ~/.vimrc
+ln -sf ./dev/misc/dotfiles/.zshrc        ~/.zshrc
+mkdir ~/bin && ln -sf ./dev/misc/dotfiles/misc/pero     ~/bin/pero
 mkdir -p ~/.zsh/completion
 curl -L https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker > ~/.zsh/completion/_docker
 curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose

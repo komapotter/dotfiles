@@ -13,7 +13,7 @@ if [ "$PS1" ]; then
 fi
 set -o vi
 export GOROOT=`go env GOROOT`
-export GOPATH=$HOME/dev/go
+export GOPATH=$HOME/dev
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
