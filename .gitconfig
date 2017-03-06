@@ -52,3 +52,5 @@
 	diff = diff-highlight | less
 [interactive]
 	diffFilter = diff-highlight
+[ghq]
+	root = /Users/yasushikomatsu/dev/src
