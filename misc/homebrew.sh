@@ -9,3 +9,4 @@
  brew install automake
  brew tap homebrew/dupes
  brew install homebrew/dupes/screen
+ brew install peco
