@@ -433,6 +433,7 @@ set path+=$GOPATH/src/**
 exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
 inoremap <C-a> <C-x><C-o>
 au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4 completeopt=menu,preview filetype=go
+au BufNewFile,BufRead *.go inoremap <expr> = smartchr#loop(' = ', ' := ', ' != ', ' == ')
 au BufWritePre *.go :GoFmt
 au FileType go compiler go
 let g:go_fmt_command = 'goimports'
@@ -442,7 +443,6 @@ au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go'] }
 let g:syntastic_go_checkers = ['go', 'golint']
-au Filetype go inoremap <expr> = smartchr#loop(' = ', ' := ', ' != ', ' == ')
 au FileType go :highlight goExtraVars cterm=bold ctermfg=6
 au FileType go :match goExtraVars /\<ok\>\|\<err\>/
 
@@ -541,6 +541,7 @@ augroup END
 
 ""### html
 au BufNewFile,BufRead *.html set sw=2 expandtab ts=2 completeopt=menu,preview filetype=html
+au BufNewFile,BufRead *.html inoremap <expr> = smartchr#loop('="', '=')
 
 ""### vue.js
 au BufNewFile,BufRead *.vue set sw=2 expandtab ts=2 completeopt=menu,preview filetype=html
