@@ -5,3 +5,4 @@ ln -sf ./dev/dotfiles/.gitconfig    ~/.gitconfig
 ln -sf ./dev/dotfiles/.screenrc     ~/.screenrc
 ln -sf ./dev/dotfiles/.vimrc        ~/.vimrc
 ln -sf ./dev/dotfiles/.zshrc        ~/.zshrc
+mkdir ~/bin && ln -sf ./dev/dotfiles/misc/pero     ~/bin/pero
