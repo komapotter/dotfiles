@@ -10,3 +10,5 @@
  brew tap homebrew/dupes
  brew install homebrew/dupes/screen
  brew install peco
+ brew install ack
+ brew install ghq
