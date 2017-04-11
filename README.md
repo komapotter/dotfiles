@@ -8,5 +8,6 @@ vim
 :NeoBundleInstall
 :GoUpdateBinaries
 gocode set autobuild true
+gocode set unimported-packages true
 ```
 

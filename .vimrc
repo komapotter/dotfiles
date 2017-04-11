@@ -37,6 +37,7 @@ set virtualedit=all
 set nobackup
 set history=1000
 set hlsearch
+set directory=~/.vim/tmp
 syntax enable
 let g:netrw_altv=1
 
@@ -351,7 +352,7 @@ xnoremap ,se y<Esc>q/<Esc>P<CR>
 let g:unite_enable_start_insert = 1
 let g:unite_source_history_yank_enable  = 1
 let g:unite_source_file_mru_limit  =  200
-noremap <C-l> :Unite buffer file file/new file_mru<CR>
+noremap <C-l> :Unite buffer file directory file/new file_mru<CR>
 
 "### visual mode select search
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
@@ -443,6 +444,7 @@ au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go'] }
 let g:syntastic_go_checkers = ['go', 'golint']
+let g:go_gocode_unimported_packages = 1
 au FileType go :highlight goExtraVars cterm=bold ctermfg=6
 au FileType go :match goExtraVars /\<ok\>\|\<err\>/
 
