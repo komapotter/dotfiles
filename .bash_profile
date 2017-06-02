@@ -14,3 +14,6 @@ export PATH
 #eval "$(plenv init -)"
 #export PATH="$HOME/.rbenv/bin:$PATH"
 #eval "$(rbenv init -)"
+
+# added by Anaconda3 4.3.1 installer
+export PATH="/anaconda/bin:$PATH"
