@@ -17,3 +17,5 @@ export GOPATH=$HOME/dev
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
+export PATH=$PATH:$HOME/.cargo/bin
+export RUST_SRC_PATH=$HOME/dev/src/github.com/rust-lang/rust/src

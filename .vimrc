@@ -107,6 +107,8 @@ NeoBundle 'https://github.com/kana/vim-smartchr.git'
 NeoBundle 'https://github.com/osyo-manga/vim-over.git'
 NeoBundle 'nginx.vim'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'rust-lang/rust.vim'
+NeoBundle 'racer-rust/vim-racer'
 call neobundle#end()
 
 filetype plugin indent on     " required!
@@ -559,3 +561,14 @@ au BufNewFile,BufRead *.json set sw=2 expandtab ts=2 completeopt=menu,preview fi
 
 ""### yaml
 au BufNewFile,BufRead *.yaml set sw=2 expandtab ts=2 completeopt=menu,preview filetype=yaml
+
+""### Rust
+au FileType rust set hidden
+let g:racer_cmd = "$HOME/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
+let g:rustfmt_autosave = 1
+let g:rustfmt_command = "$HOME/.cargo/bin/rustfmt"
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
