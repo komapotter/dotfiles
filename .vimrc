@@ -109,6 +109,8 @@ NeoBundle 'nginx.vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'rust-lang/rust.vim'
 NeoBundle 'racer-rust/vim-racer'
+NeoBundle 'tpope/vim-markdown'
+NeoBundle 'ctrlpvim/ctrlp.vim'
 call neobundle#end()
 
 filetype plugin indent on     " required!
@@ -354,7 +356,9 @@ xnoremap ,se y<Esc>q/<Esc>P<CR>
 let g:unite_enable_start_insert = 1
 let g:unite_source_history_yank_enable  = 1
 let g:unite_source_file_mru_limit  =  200
-noremap <C-l> :Unite buffer file directory file/new file_mru<CR>
+let g:unite_source_directory_mru_limit  =  200
+let g:unite_source_grep_max_candidates = 200
+noremap <C-l> :Unite buffer file directory file/new file_mru directory_mru<CR>
 
 "### visual mode select search
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
@@ -444,9 +448,12 @@ au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <leader>gd <Plug>(go-implements)
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go'] }
 let g:syntastic_go_checkers = ['go', 'golint']
 let g:go_gocode_unimported_packages = 1
+let g:go_auto_type_info = 1
+""let g:go_auto_sameids = 1
 au FileType go :highlight goExtraVars cterm=bold ctermfg=6
 au FileType go :match goExtraVars /\<ok\>\|\<err\>/
 
