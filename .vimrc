@@ -82,7 +82,8 @@ NeoBundle 'https://github.com/kmnk/vim-unite-giti.git'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'dgryski/vim-godef'
 NeoBundle 'vim-jp/vim-go-extra'
-NeoBundle 'https://github.com/Townk/vim-autoclose'
+""NeoBundle 'https://github.com/Townk/vim-autoclose'
+NeoBundle 'cohama/lexima.vim'
 "
 "" My Bundles here:
 ""
@@ -440,7 +441,8 @@ set path+=$GOPATH/src/**
 exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
 inoremap <C-a> <C-x><C-o>
 au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4 completeopt=menu,preview filetype=go
-au BufNewFile,BufRead *.go inoremap <expr> = smartchr#loop(' = ', ' := ', ' != ', ' == ')
+au BufNewFile,BufRead *.go inoremap <expr> = smartchr#loop(' = ', ' := ', ' != ', ' == ', '=')
+au BufNewFile,BufRead *.go inoremap <expr> - smartchr#loop('-', '<-')
 au BufWritePre *.go :GoFmt
 au FileType go compiler go
 let g:go_fmt_command = 'goimports'
@@ -452,7 +454,7 @@ au FileType go nmap <leader>gd <Plug>(go-implements)
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go'] }
 let g:syntastic_go_checkers = ['go', 'golint']
 let g:go_gocode_unimported_packages = 1
-let g:go_auto_type_info = 1
+""let g:go_auto_type_info = 1
 ""let g:go_auto_sameids = 1
 au FileType go :highlight goExtraVars cterm=bold ctermfg=6
 au FileType go :match goExtraVars /\<ok\>\|\<err\>/
