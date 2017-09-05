@@ -451,7 +451,7 @@ au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 au FileType go nmap <leader>gd <Plug>(go-implements)
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go'] }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go', 'python'] }
 let g:syntastic_go_checkers = ['go', 'golint']
 let g:go_gocode_unimported_packages = 1
 ""let g:go_auto_type_info = 1
@@ -581,3 +581,6 @@ au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
+""### Python
+let g:syntastic_python_checkers = ['flake8']
