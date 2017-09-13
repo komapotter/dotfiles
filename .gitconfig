@@ -10,6 +10,7 @@
     ap = add -p #with TermReadKey
     b = branch
     ba = branch -a
+    bw = browse
     co = checkout
     cob = checkout -b
     cp = cherry-pick
@@ -31,6 +32,7 @@
     mgs = merge --squash
     mgn = merge --no-ff
     ps = push
+    pr = pull-request
     rb = rebase
     rh = reset HEAD
     s = status --short

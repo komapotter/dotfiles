@@ -127,3 +127,6 @@ function peco-src() {
   zle -R -c
 }
 zle -N peco-src
+
+## hub
+function git(){hub "$@"}
