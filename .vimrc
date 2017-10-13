@@ -456,6 +456,7 @@ let g:syntastic_go_checkers = ['go', 'golint']
 let g:go_gocode_unimported_packages = 1
 ""let g:go_auto_type_info = 1
 ""let g:go_auto_sameids = 1
+let g:go_highlight_variable_declarations = 1
 au FileType go :highlight goExtraVars cterm=bold ctermfg=6
 au FileType go :match goExtraVars /\<ok\>\|\<err\>/
 
