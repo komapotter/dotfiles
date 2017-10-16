@@ -48,15 +48,15 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/Users/yasushikomatsu/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/Users/yasushikomatsu/.cache/dein')
-  call dein#begin('/Users/yasushikomatsu/.cache/dein')
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
 
   " Let dein manage dein
   " Required:
-  call dein#add('/Users/yasushikomatsu/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
   call dein#add('Shougo/neosnippet.vim')
@@ -206,28 +206,25 @@ nnoremap <sid>(command-line-enter) q:
 xnoremap <sid>(command-line-enter) q:
 nnoremap <sid>(command-line-norange) q:<C-u>
 "
-nmap :  <sid>(command-line-enter)
-xmap :  <sid>(command-line-enter)
+nmap : <sid>(command-line-enter)
+xmap : <sid>(command-line-enter)
 
 autocmd CmdwinEnter * call s:init_cmdwin()
 autocmd CmdwinLeave * let g:neocomplcache_enable_auto_select = 1
 
 function! s:init_cmdwin()
-	let g:neocomplcache_enable_auto_select  =  0
-	let b:neocomplcache_sources_list  =  ['vim_complete']
+	let g:neocomplcache_enable_auto_select = 0
+	let b:neocomplcache_sources_list = ['vim_complete']
 
     nnoremap <buffer> q :<C-u>quit<CR>
     nnoremap <buffer> <TAB> :<C-u>quit<CR>
 
     inoremap <buffer><expr><CR> neocomplete#close_popup()."\<CR>"
-    inoremap <buffer><expr><C-h> col('.') == 1 ?
-          \ "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
-    inoremap <buffer><expr><BS> col('.') == 1 ?
-          \ "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
+    inoremap <buffer><expr><C-h> col('.') == 1 ? "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
+    inoremap <buffer><expr><BS> col('.') == 1 ? "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
 
     " Completion.
-    inoremap <buffer><expr><TAB>  pumvisible() ?
-          \ "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
+    inoremap <buffer><expr><TAB>  pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
     
     startinsert!
 endfunction
