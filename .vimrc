@@ -41,83 +41,71 @@ set directory=~/.vim/tmp
 syntax enable
 let g:netrw_altv=1
 
-"### neobundle
-" Brief help
-" :NeoBundleList          - list configured bundles
-" :NeoBundleInstall(!)    - install(update) bundles
-" :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
 
-" Note: Skip initialization for vim-tiny or vim-small.
-if !1 | finish | endif
-
-if has('vim_starting')
-  if &compatible
-    set nocompatible " Be iMproved
-  endif
-  set runtimepath+=~/.vim/neobundle.vim.git/
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
 endif
 
-"" proxy
-let g:neobundle_default_git_protocol='https'
+" Required:
+set runtimepath+=/Users/yasushikomatsu/.cache/dein/repos/github.com/Shougo/dein.vim
 
-call neobundle#begin(expand('~/.vim/bundle'))
-NeoBundleFetch 'Shougo/neobundle.vim'
+" Required:
+if dein#load_state('/Users/yasushikomatsu/.cache/dein')
+  call dein#begin('/Users/yasushikomatsu/.cache/dein')
 
-"" let NeoBundle manage NeoBundle required! 
-NeoBundle 'https://github.com/Shougo/neobundle.vim'
-"" recommended to install
-NeoBundle 'https://github.com/Shougo/vimproc'
-"" after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-NeoBundle 'https://github.com/Shougo/vimshell'
-NeoBundle 'https://github.com/Shougo/unite.vim'
-NeoBundle 'https://github.com/Shougo/unite-outline'
-NeoBundle 'https://github.com/Shougo/neocomplcache'
-NeoBundle 'https://github.com/Shougo/vimfiler'
-NeoBundle 'https://github.com/Shougo/echodoc.git'
-NeoBundle 'https://github.com/Shougo/vinarise.git'
-NeoBundle 'https://github.com/Shougo/neomru.vim'
-NeoBundle 'https://github.com/fatih/vim-go.git'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'https://github.com/kmnk/vim-unite-giti.git'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'dgryski/vim-godef'
-NeoBundle 'vim-jp/vim-go-extra'
-""NeoBundle 'https://github.com/Townk/vim-autoclose'
-NeoBundle 'cohama/lexima.vim'
-"
-"" My Bundles here:
-""
-"" original repos on github
-"NeoBundle 'tpope/vim-fugitive'
-"NeoBundle 'Lokaltog/vim-easymotion'
-"NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-"" vim-scripts repos
-"NeoBundle 'L9'
-"NeoBundle 'FuzzyFinder'
-"NeoBundle 'rails.vim'
-"" non github repos
-"NeoBundle 'git://git.wincent.com/command-t.git'
-"" non git repos
-"NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
-"NeoBundle 'https://bitbucket.org/ns9tks/vim-fuzzyfinder'
-"
-"" add my favorite
-NeoBundle 'https://github.com/kana/vim-smartchr.git'
-"NeoBundle 'https://github.com/thinca/vim-quickrun'
-"NeoBundle 'davidco/taskpaper'
-NeoBundle 'https://github.com/osyo-manga/vim-over.git'
-NeoBundle 'nginx.vim'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'rust-lang/rust.vim'
-NeoBundle 'racer-rust/vim-racer'
-NeoBundle 'tpope/vim-markdown'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-call neobundle#end()
+  " Let dein manage dein
+  " Required:
+  call dein#add('/Users/yasushikomatsu/.cache/dein/repos/github.com/Shougo/dein.vim')
 
-filetype plugin indent on     " required!
+  " Add or remove your plugins here:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
 
-" Installation check.
-NeoBundleCheck
+  " You can specify revision/branch/tag.
+  call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+  "" after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
+
+  " My favorite
+  call dein#add('Shougo/vimshell')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/unite-outline')
+  call dein#add('Shougo/neocomplete.vim')
+  call dein#add('Shougo/vimfiler')
+  call dein#add('Shougo/echodoc.git')
+  call dein#add('Shougo/vinarise.git')
+  call dein#add('Shougo/neomru.vim')
+  call dein#add('fatih/vim-go.git')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('kmnk/vim-unite-giti.git')
+  call dein#add('majutsushi/tagbar')
+  call dein#add('dgryski/vim-godef')
+  call dein#add('vim-jp/vim-go-extra')
+  call dein#add('cohama/lexima.vim')
+  call dein#add('kana/vim-smartchr.git')
+  call dein#add('osyo-manga/vim-over.git')
+  call dein#add('vim-scripts/nginx.vim')
+  call dein#add('scrooloose/syntastic')
+  call dein#add('rust-lang/rust.vim')
+  call dein#add('racer-rust/vim-racer')
+  call dein#add('tpope/vim-markdown')
+  call dein#add('ctrlpvim/ctrlp.vim')
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+"  call dein#install()
+"endif
+
+"End dein Scripts-------------------------
 
 "### paste
 lnoremap <c-v> <c-v>
@@ -147,10 +135,6 @@ nnoremap gc `[v`]
 vnoremap gc :<C-u>normal gc<Return>
 onoremap gc :<C-u>normal gc<Return>
 
-"### help
-"nnoremap <C-h> :<C-u>help<Space>
-"nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><Return>
-
 "### grep
 nnoremap ,gr :<C-u>InnerGrep<Space>
 command! -nargs=? InnerGrep vimgrep /<args>/ % | cw
@@ -158,95 +142,42 @@ command! -nargs=? InnerGrep vimgrep /<args>/ % | cw
 "### substitute
 nnoremap <expr> ,ss ':%substitute/\<' . expand('<cword>') . '\>/'
 
-""### buffer select
-" noremap <C-l> :<C-u>ls<Return>:b<Space>
-" nnoremap <LEFT> :bn<RETURN>
-" nnoremap <RIGHT> :bN<RETURN>
-
 "### paren
 vnoremap ,sc "zc(<C-r>z)<Esc>
 inoremap ,mc ()<Esc>i
 
-"### smartchr
-"inoremap <expr> = smartchr#loop('=', ' = ', ' => ', ' == ')
-"inoremap <expr> - smartchr#loop('-', '->')
-"inoremap <expr> $ smartchr#loop('$', '$(''', '$(''#')
-"inoremap <expr> [ smartchr#loop('[ ', ' [ ',)
-"inoremap <expr> ] smartchr#loop(' ]', '] ',)
-"inoremap <expr> { smartchr#loop('{ ', ' { ',)
-"inoremap <expr> } smartchr#loop(' }', '} ',)
-"inoremap <expr> ( smartchr#loop('( ', ' ( ',)
-"inoremap <expr> ) smartchr#loop(' )', ') ',' ) )',)
-
-"### amp escape
-"noremap <C-i> :ToAmp<Space>
-"command! -range -nargs=? ToAmp :<line1>,<line2>call _ToAmp()
-"function! _ToAmp() range
-"    for linenum in range(a:firstline, a:lastline)
-"       let l:curr_line = getline(linenum)
-"        let l:replacement = substitute(l:curr_line, '&', '&amp', '')
-"        call setline(linenum, l:replacement)
-"    endfor
-"endfunction
-
-"### neocomplcache
+"### neocomplete-------------------------
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
+let g:neocomplete#enable_smart_case = 1
 " Use camel case completion.
-let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplete#enable_camel_case_completion = 1
 " Use underbar completion.
-let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplete#enable_underbar_completion = 1
 " Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+let g:neocomplete#sources#syntax#min_syntax_length = 3
 
 " Define dictionary.
-" let g:neocomplcache_dictionary_filetype_lists = {
-"     \ 'default' : '',
-"     \ 'vimshell' : $HOME.'/.vimshell_hist',
-"     \ 'scheme' : $HOME.'/.gosh_completions'
-"         \ }
-	
-" Define keyword.
-" if !exists('g:neocomplcache_keyword_patterns')
-"     let g:neocomplcache_keyword_patterns = {}
-" endif
-" let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-"imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-"smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-"inoremap <expr><C-g>     neocomplcache#undo_completion()
-"inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" SuperTab like snippets behavior.
-"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-" inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+" inoremap <expr><CR> neocomplete#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "<CR>"
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-
-" AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplcache_enable_auto_select = 1
-"let g:neocomplcache_disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><C-y> neocomplete#close_popup()
+inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "<CR>"
+inoremap <expr><C-e> neocomplete#cancel_popup()
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -256,26 +187,19 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
-" if !exists('g:neocomplcache_omni_patterns')
-" 	let g:neocomplcache_omni_patterns = {}
-" endif
-" let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-" let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-" let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
-" ### window width
-"nnoremap <C-w><C-w> <C-w>w:call <SID>good_width()<Cr>
-"nnoremap <C-w><C-h> <C-w>h:call <SID>good_width()<Cr>
-"nnoremap <C-w><C-l> <C-w>l:call <SID>good_width()<Cr>
-"nnoremap <C-w><C-j> <C-w>j:call <SID>good_width()<Cr>
-"nnoremap <C-w><C-k> <C-w>k:call <SID>good_width()<Cr>
-"function! s:good_width()
-"    if winwidth(0) < 100
-"        vertical resize 100
-"    endif
-"endfunction
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+"### END neocomplete-------------------------
+
 
 " ### cmdline-window
 nnoremap <sid>(command-line-enter) q:
@@ -378,62 +302,6 @@ nnoremap ,p "+p
 "### visual mode select calculate(visual selected numbers into 'c'register and
 "### add to 'r'register)
 vnoremap <silent> ,cal "cy:let @r=substitute(escape(@c,'\/'),"\n",'+','g')<CR>
-
-""### vimshell
-"let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-""let g:vimshell_right_prompt = 'vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
-"let g:vimshell_enable_smart_case = 1
-"
-"if has('win32') || has('win64')
-"  " Display user name on Windows.
-"  let g:vimshell_prompt = $USERNAME."% "
-"else
-"  " Display user name on Linux.
-"  let g:vimshell_prompt = $USER."% "
-"
-"  call vimshell#set_execute_file('bmp,jpg,png,gif', 'gexe eog')
-"  call vimshell#set_execute_file('mp3,m4a,ogg', 'gexe amarok')
-"  let g:vimshell_execute_file_list['zip'] = 'zipinfo'
-"  call vimshell#set_execute_file('tgz,gz', 'gzcat')
-"    call vimshell#set_execute_file('tbz,bz2', 'bzcat')
-"endif
-"
-"" Initialize execute file list.
-"let g:vimshell_execute_file_list = {}
-""call vimshell#set_execute_file('txt,vim,c,h,cpp,d,xml,java', 'vim')
-"let g:vimshell_execute_file_list['rb'] = 'ruby'
-"let g:vimshell_execute_file_list['pl'] = 'perl'
-"let g:vimshell_execute_file_list['py'] = 'python'
-""call vimshell#set_execute_file('html,xhtml', 'gexe firefox')
-"
-"autocmd FileType vimshell
-"\ call vimshell#altercmd#define('g', 'git')
-"\| call vimshell#altercmd#define('i', 'iexe')
-"\| call vimshell#altercmd#define('l', 'll')
-"\| call vimshell#altercmd#define('ll', 'ls -l')
-"\| call vimshell#hook#add('chpwd', 'my_chpwd', 'g:my_chpwd')
-"
-"function! g:my_chpwd(args, context)
-"  call vimshell#execute('ls')
-"endfunction
-"
-"autocmd FileType int-* call s:interactive_settings()
-"function! s:interactive_settings()
-"endfunction
-
-
-""### vimfiler
-"let g:vimfiler_as_default_explorer = 1
-
-
-""### ChangeLog 
-"let g:task_paper_date_format = "%Y-%m-%dT%H:%M:%S%z"
-""nnoremap <Space>g. :<C-u>edit c:/Documents\ and\ Settings/yasushik/Desktop/memo/gtd.taskpaper<Return>
-""nnoremap <Space>t. :<C-u>set filetype=taskpaper<CR>
-"autocmd BufRead,BufNewFile *taskpaper set filetype=taskpaper
-"
-""### matchit
-"source $VIMRUNTIME/macros/matchit.vim
 
 ""### golang
 set path+=$GOPATH/src/**
