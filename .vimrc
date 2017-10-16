@@ -210,15 +210,24 @@ nmap :  <sid>(command-line-enter)
 xmap :  <sid>(command-line-enter)
 
 autocmd CmdwinEnter * call s:init_cmdwin()
+autocmd CmdwinLeave * let g:neocomplcache_enable_auto_select = 1
+
 function! s:init_cmdwin()
+	let g:neocomplcache_enable_auto_select  =  0
+	let b:neocomplcache_sources_list  =  ['vim_complete']
+
     nnoremap <buffer> q :<C-u>quit<CR>
     nnoremap <buffer> <TAB> :<C-u>quit<CR>
-    inoremap <buffer><expr><CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
-    inoremap <buffer><expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-    inoremap <buffer><expr><BS> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+
+    inoremap <buffer><expr><CR> neocomplete#close_popup()."\<CR>"
+    inoremap <buffer><expr><C-h> col('.') == 1 ?
+          \ "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
+    inoremap <buffer><expr><BS> col('.') == 1 ?
+          \ "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
 
     " Completion.
-    inoremap <buffer><expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    inoremap <buffer><expr><TAB>  pumvisible() ?
+          \ "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
     
     startinsert!
 endfunction
