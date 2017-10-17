@@ -62,11 +62,8 @@ if dein#load_state('~/.cache/dein')
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
 
-  " You can specify revision/branch/tag.
-  call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
-  "" after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-
   " My favorite
+  call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('Shougo/vimshell')
   call dein#add('Shougo/unite.vim')
   call dein#add('Shougo/unite-outline')
@@ -153,31 +150,33 @@ let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
-" Use camel case completion.
-let g:neocomplete#enable_camel_case_completion = 1
-" Use underbar completion.
-let g:neocomplete#enable_underbar_completion = 1
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_syntax_length = 3
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" disable preview
+set completeopt-=preview
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+    \ }
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-" inoremap <expr><CR> neocomplete#smart_close_popup() . "\<CR>"
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
 " <TAB>: completion.
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><C-y> neocomplete#close_popup()
-inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "<CR>"
-inoremap <expr><C-e> neocomplete#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -198,36 +197,38 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-"### END neocomplete-------------------------
-
-
 " ### cmdline-window
 nnoremap <sid>(command-line-enter) q:
 xnoremap <sid>(command-line-enter) q:
 nnoremap <sid>(command-line-norange) q:<C-u>
-"
 nmap : <sid>(command-line-enter)
 xmap : <sid>(command-line-enter)
 
 autocmd CmdwinEnter * call s:init_cmdwin()
-autocmd CmdwinLeave * let g:neocomplcache_enable_auto_select = 1
+autocmd CmdwinLeave * let g:neocomplete#enable_auto_select = 1
 
 function! s:init_cmdwin()
-	let g:neocomplcache_enable_auto_select = 0
-	let b:neocomplcache_sources_list = ['vim_complete']
+	let g:neocomplete#enable_auto_select = 0
+	" let b:neocomplete_sources = ['vim_complete']
 
-    nnoremap <buffer> q :<C-u>quit<CR>
-    nnoremap <buffer> <TAB> :<C-u>quit<CR>
+    nnoremap <buffer><silent> q :<C-u>quit<CR>
+    nnoremap <buffer><silent> <TAB> :<C-u>quit<CR>
 
     inoremap <buffer><expr><CR> neocomplete#close_popup()."\<CR>"
     inoremap <buffer><expr><C-h> col('.') == 1 ? "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
     inoremap <buffer><expr><BS> col('.') == 1 ? "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
 
     " Completion.
-    inoremap <buffer><expr><TAB>  pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
+    inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : neocomplete#start_manual_complete()
+    function! s:check_back_space() abort "{{{
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction"}}}
     
     startinsert!
 endfunction
+
+"### END neocomplete-------------------------
 
 " ### visual mode select search
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
