@@ -87,6 +87,7 @@ if dein#load_state('~/.cache/dein')
   call dein#add('racer-rust/vim-racer')
   call dein#add('tpope/vim-markdown')
   call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('aklt/plantuml-syntax')
 
   " Required:
   call dein#end()
@@ -98,9 +99,9 @@ filetype plugin indent on
 syntax enable
 
 " If you want to install not installed plugins on startup.
-"if dein#check_install()
-"  call dein#install()
-"endif
+if dein#check_install()
+  call dein#install()
+endif
 
 "End dein Scripts-------------------------
 
@@ -205,7 +206,7 @@ nmap : <sid>(command-line-enter)
 xmap : <sid>(command-line-enter)
 
 autocmd CmdwinEnter * call s:init_cmdwin()
-autocmd CmdwinLeave * let g:neocomplete#enable_auto_select = 1
+" autocmd CmdwinLeave * let g:neocomplete#enable_auto_select = 1
 
 function! s:init_cmdwin()
 	let g:neocomplete#enable_auto_select = 0
@@ -460,3 +461,9 @@ au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
 ""### Python
 let g:syntastic_python_checkers = ['flake8']
+
+""### PluntUML
+let g:plantuml_executable_script="~/dev/misc/dotfiles/misc/plantuml.sh"
+
+""### Cron
+set backupskip=/tmp/*,/private/tmp/*
