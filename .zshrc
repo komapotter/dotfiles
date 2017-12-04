@@ -108,7 +108,7 @@ fi
 source /usr/local/bin/aws_zsh_completer.sh
 
 ## direnv
-#eval "$(direnv hook zsh)"
+eval "$(direnv hook zsh)"
 
 ## embulk
 export PATH="$HOME/.embulk/bin:$PATH"
@@ -130,3 +130,7 @@ zle -N peco-src
 
 ## hub
 function git(){hub "$@"}
+
+## gcloud
+source ~/dev/misc/google-cloud-sdk/path.zsh.inc
+source ~/dev/misc/google-cloud-sdk/completion.zsh.inc
