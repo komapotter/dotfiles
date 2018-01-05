@@ -144,6 +144,9 @@ nnoremap <expr> ,ss ':%substitute/\<' . expand('<cword>') . '\>/'
 vnoremap ,sc "zc(<C-r>z)<Esc>
 inoremap ,mc ()<Esc>i
 
+"### terminal
+nnoremap ,tr :<C-u>rightbelow term ++rows=10<CR>
+
 "### neocomplete-------------------------
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -319,6 +322,8 @@ inoremap <C-a> <C-x><C-o>
 au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4 completeopt=menu,preview filetype=go
 au BufNewFile,BufRead *.go inoremap <expr> = smartchr#loop(' = ', ' := ', ' != ', ' == ', '=')
 au BufNewFile,BufRead *.go inoremap <expr> - smartchr#loop('-', '<-')
+au BufNewFile,BufRead *.go nnoremap <C-p> :lprev<CR>
+au BufNewFile,BufRead *.go nnoremap <C-n> :lnext<CR>
 au BufWritePre *.go :GoFmt
 au FileType go compiler go
 let g:go_fmt_command = 'goimports'
@@ -330,6 +335,10 @@ au FileType go nmap <leader>gd <Plug>(go-implements)
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go', 'python'] }
 let g:syntastic_go_checkers = ['go', 'golint']
 let g:go_gocode_unimported_packages = 1
+let g:syntastic_always_populate_loc_list = 1
+""let g:syntastic_auto_loc_list = 1
+""let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 ""let g:go_auto_type_info = 1
 ""let g:go_auto_sameids = 1
 let g:go_highlight_variable_declarations = 1
