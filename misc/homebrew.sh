@@ -13,3 +13,5 @@
  brew install ack
  brew install ghq
  brew install hub
+ brew install direnv
+ brew install wget
