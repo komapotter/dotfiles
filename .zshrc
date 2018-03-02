@@ -71,7 +71,7 @@ zle -N magic-space
 bindkey " " magic-space
 
 ###     GNU screen title
-if [ "$TERM" = "screen" ]; then
+if [ "$TERM" = "screen-256color" ]; then
     preexec() {
         emulate -L zsh
         local -a cmd; cmd=(${(z)2})
@@ -130,7 +130,12 @@ zle -N peco-src
 
 ## hub
 function git(){hub "$@"}
+eval "$(hub alias -s)"
 
 ## gcloud
-source ~/dev/misc/google-cloud-sdk/path.zsh.inc
-source ~/dev/misc/google-cloud-sdk/completion.zsh.inc
+#source ~/dev/misc/google-cloud-sdk/path.zsh.inc
+#source ~/dev/misc/google-cloud-sdk/completion.zsh.inc
+
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

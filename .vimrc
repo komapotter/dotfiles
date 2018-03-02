@@ -1,3 +1,9 @@
+"### map leader
+let mapleader = ","
+
+"### remap escape
+xmap <C-;> <Esc>
+
 "### window basic
 set ch=2
 set mousehide
@@ -38,6 +44,7 @@ set nobackup
 set history=1000
 set hlsearch
 set directory=~/.vim/tmp
+set ambiwidth=double
 syntax enable
 let g:netrw_altv=1
 
@@ -72,22 +79,32 @@ if dein#load_state('~/.cache/dein')
   call dein#add('Shougo/echodoc.git')
   call dein#add('Shougo/vinarise.git')
   call dein#add('Shougo/neomru.vim')
+  call dein#add('Shougo/neosnippet')
+  call dein#add('Shougo/neosnippet-snippets')
   call dein#add('fatih/vim-go.git')
   call dein#add('tpope/vim-fugitive')
   call dein#add('kmnk/vim-unite-giti.git')
   call dein#add('majutsushi/tagbar')
-  call dein#add('dgryski/vim-godef')
-  call dein#add('vim-jp/vim-go-extra')
+"  call dein#add('dgryski/vim-godef')
+"  call dein#add('vim-jp/vim-go-extra')
   call dein#add('cohama/lexima.vim')
   call dein#add('kana/vim-smartchr.git')
-  call dein#add('osyo-manga/vim-over.git')
+"  call dein#add('osyo-manga/vim-over.git')
   call dein#add('vim-scripts/nginx.vim')
-  call dein#add('scrooloose/syntastic')
-  call dein#add('rust-lang/rust.vim')
-  call dein#add('racer-rust/vim-racer')
+"  call dein#add('rust-lang/rust.vim')
+"  call dein#add('racer-rust/vim-racer')
   call dein#add('tpope/vim-markdown')
-  call dein#add('ctrlpvim/ctrlp.vim')
+"  call dein#add('ctrlpvim/ctrlp.vim')
   call dein#add('aklt/plantuml-syntax')
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('AndrewRadev/splitjoin.vim')
+
+  if has('job') && has('channel') && has('timers')
+    call dein#add('w0rp/ale')
+  else
+    call dein#add('vim-syntastic/syntastic')
+  endif
 
   " Required:
   call dein#end()
@@ -104,6 +121,8 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
+
+
 
 "### paste
 lnoremap <c-v> <c-v>
@@ -134,18 +153,18 @@ vnoremap gc :<C-u>normal gc<Return>
 onoremap gc :<C-u>normal gc<Return>
 
 "### grep
-nnoremap ,gr :<C-u>InnerGrep<Space>
+nnoremap <Leader>gr :<C-u>InnerGrep<Space>
 command! -nargs=? InnerGrep vimgrep /<args>/ % | cw
 
 "### substitute
-nnoremap <expr> ,ss ':%substitute/\<' . expand('<cword>') . '\>/'
+nnoremap <expr> <Leader>ss ':%substitute/\<' . expand('<cword>') . '\>/'
 
 "### paren
-vnoremap ,sc "zc(<C-r>z)<Esc>
-inoremap ,mc ()<Esc>i
+"vnoremap <Leader>sc "zc(<C-r>z)<Esc>
+"inoremap <Leader>mc ()<Esc>i
 
 "### terminal
-nnoremap ,tr :<C-u>rightbelow term ++rows=10<CR>
+nnoremap <Leader>tr :<C-u>rightbelow term ++rows=10<CR>
 
 "### neocomplete-------------------------
 " Disable AutoComplPop.
@@ -233,15 +252,37 @@ function! s:init_cmdwin()
 endfunction
 
 "### END neocomplete-------------------------
+"
+"### neosnippet-------------------------
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-t>     <Plug>(neosnippet_expand_or_jump)
+smap <C-t>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-t>     <Plug>(neosnippet_expand_target)
 
-" ### visual mode select search
-vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+"set snippet file dir
+let g:neosnippet#snippets_directory ='~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets/,~/.vim/snippets'
+"### END neosnippet-------------------------
 
 " ### manual resize
-nnoremap <silent> ,k :<C-u>resize +3<CR>
-nnoremap <silent> ,j :<C-u>resize -3<CR>
-nnoremap <silent> ,h :<C-u>vertical resize +3<CR>
-nnoremap <silent> ,l :<C-u>vertical resize -3<CR>
+nnoremap <silent> <Leader>k :<C-u>resize +3<CR>
+nnoremap <silent> <Leader>j :<C-u>resize -3<CR>
+nnoremap <silent> <Leader>h :<C-u>vertical resize +3<CR>
+nnoremap <silent> <Leader>l :<C-u>vertical resize -3<CR>
 
 " ### Buffer read
 autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
@@ -286,7 +327,7 @@ if has('persistent_undo')
 endif
 
 "### yank and search
-xnoremap ,se y<Esc>q/<Esc>P<CR>
+xnoremap <Leader>se y<Esc>q/<Esc>P<CR>
 
 "### Unite
 let g:unite_enable_start_insert = 1
@@ -302,52 +343,94 @@ vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><C
 "### visual mode select substitute
 vnoremap <silent> + "vy:%s/<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g').'/'
 
+"### visual mode convert CamelCase to snake_case
+vnoremap <silent> <Leader>cs :s#\(\<\u\l\+\\|\l\+\)\(\u\)#\l\1_\l\2#g<CR>:noh
+
+"### visual mode convert snake_case to CamelCase
+vnoremap <silent> <Leader>sc :s#\(\%(\<\l\+\)\%(_\)\@=\)\\|_\(\l\)#\u\1\2#g<CR>:noh
+
 "### marking
-inoremap ,yy ��
-inoremap ,mm ��
+inoremap <Leader>yy ¨
+inoremap <Leader>mm 
 
 "### Clipboard
-vnoremap ,y "+y
-nnoremap ,p "+p
+vnoremap <Leader>y "+y
+nnoremap <Leader>p "+p
 
 "### visual mode select calculate(visual selected numbers into 'c'register and
 "### add to 'r'register)
-vnoremap <silent> ,cal "cy:let @r=substitute(escape(@c,'\/'),"\n",'+','g')<CR>
+vnoremap <silent> <Leader>cal "cy:let @r=substitute(escape(@c,'\/'),"\n",'+','g')<CR>
 
 ""### golang
 set path+=$GOPATH/src/**
 ""set runtimepath+=$GOROOT/misc/vim
 exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
 inoremap <C-a> <C-x><C-o>
-au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4 completeopt=menu,preview filetype=go
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+au FileType go compiler go
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+au FileType go nmap <leader>gd <Plug>(go-implements)
+au FileType go nmap <leader>gt :GoDeclsDir<cr>
+au Filetype go nmap <leader>ga <Plug>(go-alternate-edit)
+au Filetype go nmap <leader>gah <Plug>(go-alternate-split)
+au Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
+au FileType go nmap <F10> :GoTest -short<cr>
+au FileType go nmap <F9> :GoCoverageToggle -short<cr>
+au FileType go nmap <C-p> <Plug>(ale_previous)
+au FileType go nmap <C-n> <Plug>(ale_next)
+
+au FileType go :highlight goExtraVars cterm=bold ctermfg=6
+au FileType go :match goExtraVars /\<ok\>\|\<err\>/
+
+au BufNewFile,BufRead *.go setlocal sw=4 noexpandtab ts=4 completeopt=menu,preview filetype=go
 au BufNewFile,BufRead *.go inoremap <expr> = smartchr#loop(' = ', ' := ', ' != ', ' == ', '=')
 au BufNewFile,BufRead *.go inoremap <expr> - smartchr#loop('-', '<-')
-au BufNewFile,BufRead *.go nnoremap <C-p> :lprev<CR>
-au BufNewFile,BufRead *.go nnoremap <C-n> :lnext<CR>
+""au BufNewFile,BufRead *.go nnoremap <C-p> :lprev<CR>
+""au BufNewFile,BufRead *.go nnoremap <C-n> :lnext<CR>
 au BufWritePre *.go :GoFmt
-au FileType go compiler go
+
 let g:go_fmt_command = 'goimports'
-let g:go_highlight_types = 1
+let g:go_fmt_fail_silently = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-au FileType go nmap <leader>gd <Plug>(go-implements)
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go', 'python'] }
-let g:syntastic_go_checkers = ['go', 'golint']
-let g:go_gocode_unimported_packages = 1
-let g:syntastic_always_populate_loc_list = 1
-""let g:syntastic_auto_loc_list = 1
-""let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_highlight_variable_declarations = 1
+
 ""let g:go_auto_type_info = 1
 ""let g:go_auto_sameids = 1
-let g:go_highlight_variable_declarations = 1
-au FileType go :highlight goExtraVars cterm=bold ctermfg=6
-au FileType go :match goExtraVars /\<ok\>\|\<err\>/
+
+""let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['go', 'python'] }
+""let g:syntastic_go_checkers = ['go', 'golint']
+""let g:syntastic_always_populate_loc_list = 1
+""let g:syntastic_check_on_wq = 0
+""let g:syntastic_auto_loc_list = 1
+""let g:syntastic_check_on_open = 1
+
+""let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+""let g:go_metalinter_autosave = 1
+""let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+
+let g:go_gocode_unimported_packages = 1
+
+let g:go_snippet_engine = "neosnippet"
 
 " VimFilerTree {{{
 command! VimFilerTree call VimFilerTree(<f-args>)
@@ -378,10 +461,16 @@ function! my_action.func(candidates)
     exec 'vsplit '. a:candidates[0].action__path
 endfunction
 call unite#custom_action('file', 'my_vsplit', my_action)
+
+" Enable file operation commands.
+" Edit file by tabedit.
+call vimfiler#custom#profile('default', 'context', {
+      \ 'safe' : 0,
+      \ })
 " }}}
 
 "### vim-over
-nnoremap <silent> ,m :OverCommandLine<CR>%s/
+"nnoremap <silent> <Leader>ov :OverCommandLine<CR>%s/
 
 " ----------------------------------------
 " Unite for git
@@ -416,14 +505,17 @@ let s:unite_hooks = {}
 function! s:unite_hooks.giti_status() "{{{
   nnoremap <silent><buffer><expr>gM unite#do_action('amend')
   nnoremap <silent><buffer><expr>gm unite#do_action('commit')
-  nnoremap <silent><buffer><expr>ga unite#do_action('stage')
+  nnoremap <silent><buffer><expr>ga unite#do_action('add')
+  nnoremap <silent><buffer><expr>gA unite#do_action('add_patch')
   nnoremap <silent><buffer><expr>gc unite#do_action('checkout')
   nnoremap <silent><buffer><expr>gd unite#do_action('diff')
+  nnoremap <silent><buffer><expr>gD unite#do_action('diff_cached')
   nnoremap <silent><buffer><expr>gu unite#do_action('unstage')
 endfunction
 "}}}
 
 function! s:unite_hooks.giti_branch() "{{{
+  nnoremap <silent><buffer><expr>s unite#do_action('switch')
   nnoremap <silent><buffer><expr>d unite#do_action('delete')
   nnoremap <silent><buffer><expr>D unite#do_action('delete_force')
 "  nnoremap <silent><buffer><expr>rd unite#do_action('delete_remote')
@@ -480,3 +572,49 @@ let g:plantuml_executable_script="~/dev/misc/dotfiles/misc/plantuml.sh"
 
 ""### Cron
 set backupskip=/tmp/*,/private/tmp/*
+
+""### ALE and airline
+let g:ale_sign_error  =  '⤫'
+let g:ale_sign_warning  =  '⚠'
+let g:airline#extensions#ale#enabled = 1
+
+""### airline theme
+set laststatus=2
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let g:airline_theme ='molokai'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''

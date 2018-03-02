@@ -242,3 +242,7 @@ windowlist string '%{.g}%3n %{.y}%f%09=%{dg} %t %='
 sorendition "+rb .G"
 
 #setenv PROMPT_COMMAND 'echo -n -e "\033k$(whoami)@$(hostname):$(pwd)\033\\"'
+
+# vim-airline
+term "screen-256color"
+
