@@ -49,6 +49,7 @@ bindkey '^R' history-incremental-search-backward
 ###     OnDemand alias
 typeset -A myabbrev
 myabbrev=(
+   "gp"      "git push origin"
    "lm"      " | more"
    "lg"      " | grep -i"
    "lsg"     "ls | grep -i"

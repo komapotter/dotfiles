@@ -94,7 +94,7 @@ if dein#load_state('~/.cache/dein')
 "  call dein#add('rust-lang/rust.vim')
 "  call dein#add('racer-rust/vim-racer')
   call dein#add('tpope/vim-markdown')
-"  call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('ctrlpvim/ctrlp.vim')
   call dein#add('aklt/plantuml-syntax')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
@@ -379,9 +379,9 @@ endfunction
 
 au FileType go compiler go
 au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+au FileType go nmap <leader>b :call <SID>build_go_files()<CR>
 au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+au FileType go nmap <leader>cv <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>gd <Plug>(go-implements)
 au FileType go nmap <leader>gt :GoDeclsDir<cr>
 au Filetype go nmap <leader>ga <Plug>(go-alternate-edit)
@@ -433,6 +433,7 @@ let g:go_gocode_unimported_packages = 1
 let g:go_snippet_engine = "neosnippet"
 
 " VimFilerTree {{{
+nnoremap <Leader>ft :VimFilerTree<CR>
 command! VimFilerTree call VimFilerTree(<f-args>)
 function VimFilerTree(...)
     let l:h = expand(a:0 > 0 ? a:1 : '%:p:h')
@@ -618,3 +619,6 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
+
+" TagBar {{{
+nnoremap <Leader>tb :Tagbar<CR>
