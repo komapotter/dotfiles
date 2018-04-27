@@ -575,9 +575,11 @@ let g:plantuml_executable_script="~/dev/misc/dotfiles/misc/plantuml.sh"
 set backupskip=/tmp/*,/private/tmp/*
 
 ""### ALE and airline
-let g:ale_sign_error  =  '⤫'
-let g:ale_sign_warning  =  '⚠'
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
 let g:airline#extensions#ale#enabled = 1
+let g:ale_linters = {'go': ['gometalinter']}
+let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=gosimple --enable=unused'
 
 ""### airline theme
 set laststatus=2

@@ -47,6 +47,7 @@
 	postBuffer = 524288000
 [core]
 	autocrlf = input
+	excludesfile = /Users/yasushi.komatsu/.gitignore_global
 [diff]
 	indentHeuristic = on
 [pager]
@@ -57,3 +58,11 @@
 	diffFilter = diff-highlight
 [ghq]
 	root = ~/dev/src
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/yasushi.komatsu/.stCommitMsg
