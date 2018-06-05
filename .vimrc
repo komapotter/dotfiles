@@ -99,6 +99,7 @@ if dein#load_state('~/.cache/dein')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('AndrewRadev/splitjoin.vim')
+  call dein#add('tpope/vim-surround')
 
   if has('job') && has('channel') && has('timers')
     call dein#add('w0rp/ale')
@@ -169,6 +170,7 @@ nnoremap <Leader>tr :<C-u>rightbelow term ++rows=10<CR>
 "### neocomplete-------------------------
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
+
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
@@ -575,9 +577,11 @@ let g:plantuml_executable_script="~/dev/misc/dotfiles/misc/plantuml.sh"
 set backupskip=/tmp/*,/private/tmp/*
 
 ""### ALE and airline
-let g:ale_sign_error  =  '⤫'
-let g:ale_sign_warning  =  '⚠'
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
 let g:airline#extensions#ale#enabled = 1
+let g:ale_linters = {'go': ['gometalinter']}
+let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=gosimple --enable=unused'
 
 ""### airline theme
 set laststatus=2
