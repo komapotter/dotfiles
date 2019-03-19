@@ -1,6 +1,7 @@
 [user]
-	name = komapotter
-	email = 36rafts@gmail.com
+    name = komapotter
+    email = 36rafts@gmail.com
+
 [color]
     ui = true
 [alias]
@@ -33,7 +34,6 @@
     mgs = merge --squash
     mgn = merge --no-ff
     ps = push
-    pr = pull-request
     rb = rebase
     rh = reset HEAD
     s = status --short
@@ -58,11 +58,5 @@
 	diffFilter = diff-highlight
 [ghq]
 	root = ~/dev/src
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [commit]
     template = ~/.stCommitMsg
