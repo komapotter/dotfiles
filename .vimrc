@@ -45,6 +45,8 @@ set history=1000
 set hlsearch
 set directory=~/.vim/tmp
 set ambiwidth=double
+set redrawtime=10000
+"set encoding=utf-8
 syntax enable
 let g:netrw_altv=1
 
@@ -100,6 +102,11 @@ if dein#load_state('~/.cache/dein')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('AndrewRadev/splitjoin.vim')
   call dein#add('tpope/vim-surround')
+  call dein#add('Shougo/deoplete.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
 
   if has('job') && has('channel') && has('timers')
     call dein#add('w0rp/ale')
@@ -122,8 +129,6 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
-
-
 
 "### paste
 lnoremap <c-v> <c-v>
@@ -160,69 +165,10 @@ command! -nargs=? InnerGrep vimgrep /<args>/ % | cw
 "### substitute
 nnoremap <expr> <Leader>ss ':%substitute/\<' . expand('<cword>') . '\>/'
 
-"### paren
-"vnoremap <Leader>sc "zc(<C-r>z)<Esc>
-"inoremap <Leader>mc ()<Esc>i
-
 "### terminal
 nnoremap <Leader>tr :<C-u>rightbelow term ++rows=10<CR>
 
-"### neocomplete-------------------------
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-" disable preview
-set completeopt-=preview
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-" ### cmdline-window
+"### cmdline-window
 nnoremap <sid>(command-line-enter) q:
 xnoremap <sid>(command-line-enter) q:
 nnoremap <sid>(command-line-norange) q:<C-u>
@@ -233,28 +179,69 @@ autocmd CmdwinEnter * call s:init_cmdwin()
 " autocmd CmdwinLeave * let g:neocomplete#enable_auto_select = 1
 
 function! s:init_cmdwin()
-	let g:neocomplete#enable_auto_select = 0
-	" let b:neocomplete_sources = ['vim_complete']
+	let g:deoplete#enable_auto_select = 0
 
     nnoremap <buffer><silent> q :<C-u>quit<CR>
     nnoremap <buffer><silent> <TAB> :<C-u>quit<CR>
 
-    inoremap <buffer><expr><CR> neocomplete#close_popup()."\<CR>"
-    inoremap <buffer><expr><C-h> col('.') == 1 ? "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
-    inoremap <buffer><expr><BS> col('.') == 1 ? "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
+    inoremap <buffer><expr><CR> deoplete#close_popup()."\<CR>"
+    inoremap <buffer><expr><C-h> col('.') == 1 ? "\<ESC>:quit\<CR>" : deoplete#cancel_popup()."\<C-h>"
+    inoremap <buffer><expr><BS> col('.') == 1 ? "\<ESC>:quit\<CR>" : deoplete#cancel_popup()."\<C-h>"
 
     " Completion.
-    inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : neocomplete#start_manual_complete()
-    function! s:check_back_space() abort "{{{
+    inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#manual_complete()
+    function! s:check_back_space() abort
       let col = col('.') - 1
       return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction"}}}
+    endfunction
     
     startinsert!
 endfunction
 
-"### END neocomplete-------------------------
-"
+"### deoplete-------------------------
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+" Use smartcase.
+let g:deoplete#enable_smart_case = 1
+
+" Set minimum syntax keyword length.
+let g:deoplete#sources#syntax#min_keyword_length = 3
+
+" disable preview
+set completeopt-=preview
+
+" Define dictionary.
+let g:deoplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+    \ }
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+endfunction
+
+" <TAB>: completion.
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#manual_complete()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
+
+"### END deoplete-------------------------
+
 "### neosnippet-------------------------
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -366,7 +353,9 @@ vnoremap <silent> <Leader>cal "cy:let @r=substitute(escape(@c,'\/'),"\n",'+','g'
 ""### golang
 set path+=$GOPATH/src/**
 ""set runtimepath+=$GOROOT/misc/vim
-exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
+""exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
+
+" omnifunc mapping
 inoremap <C-a> <C-x><C-o>
 
 " run :GoBuild or :GoTestCompile based on the go file
@@ -415,6 +404,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 let g:go_highlight_variable_declarations = 1
+let g:go_def_mode = 'gopls'
 
 ""let g:go_auto_type_info = 1
 ""let g:go_auto_sameids = 1
@@ -430,7 +420,7 @@ let g:go_highlight_variable_declarations = 1
 ""let g:go_metalinter_autosave = 1
 ""let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 
-let g:go_gocode_unimported_packages = 1
+""let g:go_gocode_unimported_packages = 1
 
 let g:go_snippet_engine = "neosnippet"
 
@@ -582,6 +572,8 @@ let g:ale_sign_warning = '⚠'
 let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = {'go': ['gometalinter']}
 let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=gosimple --enable=unused'
+""let g:ale_linters = {'go': ['golangci-lint']}
+""let g:ale_go_golangci_lint_options = '--disable=typecheck --disable=gochecknoinits --disable=lll --disable=megacheck'
 
 ""### airline theme
 set laststatus=2
