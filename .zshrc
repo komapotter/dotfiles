@@ -31,7 +31,7 @@ PROMPT=$'%{[$[31+$RANDOM % 6]m%}%U$HOST'"{%n}%b%(!.#.$)%{[m%}%u "
 #RPROMPT=$'%{[37m%}[%~]%{[m%}'
 
 ## completion
-fpath=(~/.zsh/completion $fpath)
+fpath=(~/.zsh/completions $fpath)
 
 ###     auto complete
 autoload -U compinit
