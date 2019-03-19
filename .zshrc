@@ -112,7 +112,7 @@ source /usr/local/bin/aws_zsh_completer.sh
 eval "$(direnv hook zsh)"
 
 ## embulk
-export PATH="$HOME/.embulk/bin:$PATH"
+##export PATH="$HOME/.embulk/bin:$PATH"
 
 ## digdag
 export PATH="$HOME/bin:$PATH"
