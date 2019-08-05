@@ -67,16 +67,12 @@ if dein#load_state('~/.cache/dein')
   " Required:
   call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
-  " Add or remove your plugins here:
-  call dein#add('Shougo/neosnippet.vim')
-  call dein#add('Shougo/neosnippet-snippets')
-
   " My favorite
   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('Shougo/vimshell')
   call dein#add('Shougo/unite.vim')
   call dein#add('Shougo/unite-outline')
-  call dein#add('Shougo/neocomplete.vim')
+"  call dein#add('Shougo/neocomplete.vim')
   call dein#add('Shougo/vimfiler')
   call dein#add('Shougo/echodoc.git')
   call dein#add('Shougo/vinarise.git')
@@ -108,10 +104,14 @@ if dein#load_state('~/.cache/dein')
     call dein#add('roxma/vim-hug-neovim-rpc')
   endif
 
-  if has('job') && has('channel') && has('timers')
+  if has('nvim')
     call dein#add('w0rp/ale')
   else
-    call dein#add('vim-syntastic/syntastic')
+    if has('job') && has('channel') && has('timers')
+      call dein#add('w0rp/ale')
+    else
+      call dein#add('vim-syntastic/syntastic')
+    endif
   endif
 
   " Required:
@@ -159,7 +159,7 @@ vnoremap gc :<C-u>normal gc<Return>
 onoremap gc :<C-u>normal gc<Return>
 
 "### grep
-nnoremap <Leader>gr :<C-u>InnerGrep<Space>
+nnoremap <Leader>gre :<C-u>InnerGrep<Space>
 command! -nargs=? InnerGrep vimgrep /<args>/ % | cw
 
 "### substitute
@@ -240,6 +240,9 @@ endfunction
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
 
+" WorkArround for failure of deoplete init
+let g:python3_host_prog = '/usr/local/bin/python3'
+"call deoplete#custom#option('num_processes', 1)
 "### END deoplete-------------------------
 
 "### neosnippet-------------------------
@@ -274,9 +277,9 @@ nnoremap <silent> <Leader>h :<C-u>vertical resize +3<CR>
 nnoremap <silent> <Leader>l :<C-u>vertical resize -3<CR>
 
 " ### Buffer read
-autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
-autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
-set viewoptions-=options
+"autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
+"autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
+"set viewoptions-=options
 
 " ### Search setting
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
@@ -353,7 +356,7 @@ vnoremap <silent> <Leader>cal "cy:let @r=substitute(escape(@c,'\/'),"\n",'+','g'
 ""### golang
 set path+=$GOPATH/src/**
 ""set runtimepath+=$GOROOT/misc/vim
-""exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
+"""exe "set runtimepath+=".globpath( "$GOPATH", "src/github.com/nsf/gocode/vim")
 
 " omnifunc mapping
 inoremap <C-a> <C-x><C-o>
@@ -374,14 +377,17 @@ au FileType go nmap <leader>b :call <SID>build_go_files()<CR>
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>cv <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>gd <Plug>(go-implements)
+au FileType go nmap <leader>gr <Plug>(go-referrers)
 au FileType go nmap <leader>gt :GoDeclsDir<cr>
 au Filetype go nmap <leader>ga <Plug>(go-alternate-edit)
 au Filetype go nmap <leader>gah <Plug>(go-alternate-split)
 au Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
+au FileType go nmap <leader>ie <Plug>(go-iferr)
 au FileType go nmap <F10> :GoTest -short<cr>
 au FileType go nmap <F9> :GoCoverageToggle -short<cr>
 au FileType go nmap <C-p> <Plug>(ale_previous)
 au FileType go nmap <C-n> <Plug>(ale_next)
+au FileType go nmap gt :GoDefType<cr>
 
 au FileType go :highlight goExtraVars cterm=bold ctermfg=6
 au FileType go :match goExtraVars /\<ok\>\|\<err\>/
@@ -404,7 +410,6 @@ let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 let g:go_highlight_variable_declarations = 1
-let g:go_def_mode = 'gopls'
 
 ""let g:go_auto_type_info = 1
 ""let g:go_auto_sameids = 1
@@ -423,6 +428,14 @@ let g:go_def_mode = 'gopls'
 ""let g:go_gocode_unimported_packages = 1
 
 let g:go_snippet_engine = "neosnippet"
+
+"" gopls
+"""au FileType go setlocal omnifunc=go#complete#GocodeComplete
+"""let g:go_def_mode = 'godef'
+let g:go_def_mode = 'gopls'
+let g:go_info_mode = 'gopls'
+
+
 
 " VimFilerTree {{{
 nnoremap <Leader>ft :VimFilerTree<CR>
@@ -570,10 +583,11 @@ set backupskip=/tmp/*,/private/tmp/*
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 let g:airline#extensions#ale#enabled = 1
-let g:ale_linters = {'go': ['gometalinter']}
-let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=gosimple --enable=unused'
-""let g:ale_linters = {'go': ['golangci-lint']}
-""let g:ale_go_golangci_lint_options = '--disable=typecheck --disable=gochecknoinits --disable=lll --disable=megacheck'
+"let g:ale_linters = {'go': ['gometalinter']}
+"let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=gosimple --enable=unused'
+let g:ale_linters = {'go': ['golangci-lint']}
+let g:ale_go_golangci_lint_options = '--disable-all --enable=deadcode --enable=errcheck --enable=gosimple --enable=govet --enable=ineffassign --enable=staticcheck --enable=structcheck --enable=typecheck --enable=unused --enable=varcheck'
+let g:ale_go_golangci_lint_package = 1
 
 ""### airline theme
 set laststatus=2
