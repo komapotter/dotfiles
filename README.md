@@ -8,6 +8,4 @@ sh ./installer.sh ~/.cache/dein
 vim
 :call dein#update()
 :GoUpdateBinaries
-gocode set autobuild true
-gocode set unimported-packages true
 ```
