@@ -1,6 +1,7 @@
-export EDITOR=/usr/local/bin/vim
+export EDITOR=/usr/local/bin/nvim
 
-alias vi="vim"
+alias vi="nvim"
+alias vim="nvim"
 alias ls="ls -vF"
 alias rm="rm -i"
 alias mv="mv -i"
@@ -140,3 +141,6 @@ eval "$(hub alias -s)"
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# kubectl
+source <(kubectl completion zsh)
