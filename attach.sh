@@ -1,3 +1,4 @@
+ln -sf ~/dev/src/github.com/komapotter/dotfiles ~/dev/misc/dotfiles
 ln -sf ./dev/misc/dotfiles/.bash_logout  ~/.bash_logout
 ln -sf ./dev/misc/dotfiles/.bash_profile ~/.bash_profile
 ln -sf ./dev/misc/dotfiles/.bashrc       ~/.bashrc
