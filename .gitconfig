@@ -12,8 +12,6 @@
     b = branch
     ba = branch -a
     bw = browse
-    co = checkout
-    cob = checkout -b
     cp = cherry-pick
     cim = commit --message
     civ = commit --verbose
@@ -36,11 +34,14 @@
     ps = push
     rb = rebase
     rh = reset HEAD
+    rs = restore
     s = status --short
     sgraph = !"git log --oneline --graph"
     st = stash
     sl = stash list
     sp = stash pop
+    sw = switch
+    swc = switch -c
 [url "https://"]
 	insteadOf = git://
 [http]
@@ -60,3 +61,5 @@
 	root = ~/dev/src
 [commit]
     template = ~/.stCommitMsg
+[credential]
+	helper = osxkeychain
