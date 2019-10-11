@@ -133,7 +133,7 @@ endif
 "### paste
 lnoremap <c-v> <c-v>
 cnoremap <c-v> <c-v>
-
+    
 "### rc edit
 nnoremap <Space>. :<C-u>edit $MYVIMRC<Return>
 nnoremap <Space>s. :<C-u>source $MYVIMRC<Return>
@@ -483,7 +483,7 @@ call vimfiler#custom#profile('default', 'context', {
 let g:giti_git_command = executable('hub') ? 'hub' : 'git'
 nnoremap <silent>gm :Gcommit<CR>
 nnoremap <silent>gM :Gcommit --amend<CR>
-"nnoremap <silent>gb :Gblame<CR>
+nnoremap <silent>gb :Gblame<CR>
 "nnoremap <silent>gB :Gbrowse<CR>
 
 let g:fugitive_git_executable = executable('hub') ? 'hub' : 'git'
