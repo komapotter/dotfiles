@@ -1,7 +1,7 @@
-export EDITOR=/usr/local/bin/nvim
+export EDITOR=/usr/local/bin/vim
 
-alias vi="nvim"
-alias vim="nvim"
+alias vi="vim"
+alias vim="vim"
 alias ls="ls -vF"
 alias rm="rm -i"
 alias mv="mv -i"
@@ -144,3 +144,6 @@ eval "$(hub alias -s)"
 
 # kubectl
 source <(kubectl completion zsh)
+
+# azule-cli
+source ~/dev/misc/az.completion

@@ -277,9 +277,9 @@ nnoremap <silent> <Leader>h :<C-u>vertical resize +3<CR>
 nnoremap <silent> <Leader>l :<C-u>vertical resize -3<CR>
 
 " ### Buffer read
-"autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
-"autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
-"set viewoptions-=options
+autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
+autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
+set viewoptions-=options
 
 " ### Search setting
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
