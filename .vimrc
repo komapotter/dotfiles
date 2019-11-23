@@ -105,10 +105,10 @@ if dein#load_state('~/.cache/dein')
   endif
 
   if has('nvim')
-    call dein#add('w0rp/ale')
+    call dein#add('dense-analysis/ale')
   else
     if has('job') && has('channel') && has('timers')
-      call dein#add('w0rp/ale')
+      call dein#add('dense-analysis/ale')
     else
       call dein#add('vim-syntastic/syntastic')
     endif
@@ -570,9 +570,6 @@ au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
-""### Python
-let g:syntastic_python_checkers = ['flake8']
-
 ""### PluntUML
 let g:plantuml_executable_script="~/dev/misc/dotfiles/misc/plantuml.sh"
 
@@ -583,11 +580,14 @@ set backupskip=/tmp/*,/private/tmp/*
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 let g:airline#extensions#ale#enabled = 1
-"let g:ale_linters = {'go': ['gometalinter']}
-"let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=gosimple --enable=unused'
-let g:ale_linters = {'go': ['golangci-lint']}
-let g:ale_go_golangci_lint_options = '--disable-all --enable=deadcode --enable=errcheck --enable=gosimple --enable=govet --enable=ineffassign --enable=staticcheck --enable=structcheck --enable=typecheck --enable=unused --enable=varcheck'
-let g:ale_go_golangci_lint_package = 1
+let g:ale_linters = {
+  \ 'go': ['gopls'],
+  \ 'python': ['flake8'],
+  \}
+let g:ale_fixers = {
+  \ 'go': ['trim_whitespace'],
+  \ 'python': ['autopep8', 'black', 'isort'],
+  \}
 
 ""### airline theme
 set laststatus=2
