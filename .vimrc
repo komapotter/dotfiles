@@ -583,10 +583,12 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = {
   \ 'go': ['gopls'],
   \ 'python': ['flake8'],
+  \ 'ruby': ['ruby'],
   \}
 let g:ale_fixers = {
   \ 'go': ['trim_whitespace'],
   \ 'python': ['autopep8', 'black', 'isort'],
+  \ 'ruby': ['ruby'],
   \}
 
 ""### airline theme
