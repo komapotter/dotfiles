@@ -19,3 +19,5 @@ export PATH=$PATH:$GOBIN
 export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 export PATH=$PATH:$HOME/.cargo/bin
 export RUST_SRC_PATH=$HOME/dev/src/github.com/rust-lang/rust/src
+
+#complete -C '/usr/local/bin/aws_completer' aws

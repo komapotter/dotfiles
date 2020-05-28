@@ -50,7 +50,7 @@ bindkey '^R' history-incremental-search-backward
 ###     OnDemand alias
 typeset -A myabbrev
 myabbrev=(
-   "gp"      "git push origin"
+   "gp"      "git push -u origin"
    "lm"      " | more"
    "lg"      " | grep -i"
    "lsg"     "ls | grep -i"
@@ -147,3 +147,6 @@ source <(kubectl completion zsh)
 
 # azule-cli
 source ~/dev/misc/az.completion
+
+# direnv timeout
+export DIRENV_WARN_TIMEOUT=120s
