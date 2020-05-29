@@ -83,6 +83,7 @@ Plug 'hashivim/vim-terraform', { 'for': 'terraform' }
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'cohama/lexima.vim'
 call plug#end()
 "}}}
 
@@ -102,16 +103,16 @@ inoremap <silent><expr> <TAB>
   \ asyncomplete#force_refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-"call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-"    \ 'name': 'buffer',
-"    \ 'whitelist': ['*'],
-"    \ 'blacklist': ['go'],
-"    \ 'completor': function('asyncomplete#sources#buffer#completor'),
-"    \ 'config': {
-"    \    'max_buffer_size': 5000000,
-"    \  },
-"    \ }))
-""}}}
+call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'whitelist': ['*'],
+    \ 'blacklist': ['go'],
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ 'config': {
+    \    'max_buffer_size': 5000000,
+    \  },
+    \ }))
+"}}}
 
 "### cmdline-window {{{
 nnoremap <sid>(command-line-enter) q:
