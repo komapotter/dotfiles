@@ -65,9 +65,13 @@ if has('persistent_undo')
 endif
 "}}}
 
+"### tabpage
+nnoremap <silent> <Leader>tc :tabnew<CR>
+nnoremap <silent> <Leader>tn :tabnext<CR>
+nnoremap <silent> <Leader>tp :tabprevious<CR>
+
 "### plugins {{{
 call plug#begin('~/.vim/plugged')
-Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-buffer.vim'
@@ -76,14 +80,14 @@ Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-goimports'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
-Plug 'Shougo/vimfiler'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/neomru.vim'
 Plug 'hashivim/vim-terraform', { 'for': 'terraform' }
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'cohama/lexima.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'cocopon/vaffle.vim'
 call plug#end()
 "}}}
 
@@ -142,52 +146,27 @@ function! s:init_cmdwin()
 endfunction
 "}}}
 
-"### Unite {{{
-let g:unite_enable_start_insert = 1
-let g:unite_source_history_yank_enable  = 1
-let g:unite_source_file_mru_limit  =  200
-let g:unite_source_directory_mru_limit  =  200
-let g:unite_source_grep_max_candidates = 200
-noremap <C-l> :Unite buffer file directory file/new file_mru directory_mru<CR>
+"### fzf {{{
+nnoremap <C-l> :History<CR>
+let g:fzf_layout = { 'up': '~40%' }
 "}}}
 
-" VimFilerTree {{{
-nnoremap <Leader>ft :VimFilerTree<CR>
-command! VimFilerTree call VimFilerTree(<f-args>)
-function VimFilerTree(...)
-    let l:h = expand(a:0 > 0 ? a:1 : '%:p:h')
-    let l:path = isdirectory(l:h) ? l:h : ''
-    exec ':VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit ' . l:path
-    wincmd t
-    setl winfixwidth
-endfunction
-autocmd! FileType vimfiler call s:my_vimfiler_settings()
-function! s:my_vimfiler_settings()
-    nmap     <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
-    nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<CR>
-    nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<CR>
+"### Vaffle {{{
+nnoremap <Leader>ft :Vaffle<CR>
+let g:vaffle_auto_cd = 1
+let g:vaffle_show_hidden_files = 1
+
+function! s:customize_vaffle_mappings() abort
+  " Customize key mappings here
+  nmap <buffer> K        <Plug>(vaffle-mkdir)
+  nmap <buffer> N        <Plug>(vaffle-new-file)
 endfunction
 
-let my_action = {'is_selectable' : 1}
-function! my_action.func(candidates)
-    wincmd p
-    exec 'split '. a:candidates[0].action__path
-endfunction
-call unite#custom_action('file', 'my_split', my_action)
-
-let my_action = {'is_selectable' : 1}
-function! my_action.func(candidates)
-    wincmd p
-    exec 'vsplit '. a:candidates[0].action__path
-endfunction
-call unite#custom_action('file', 'my_vsplit', my_action)
-
-" Enable file operation commands.
-" Edit file by tabedit.
-call vimfiler#custom#profile('default', 'context', {
-      \ 'safe' : 0,
-      \ })
-" }}}
+augroup vimrc_vaffle
+  autocmd!
+  autocmd FileType vaffle call s:customize_vaffle_mappings()
+augroup END
+"}}}
 
 "### vim-lsp {{{
 if empty(globpath(&rtp, 'autoload/lsp.vim'))
@@ -221,7 +200,6 @@ let g:lsp_signs_hint = {'text': '💡'}
 " }}}
 
 "### vim-terraform {{{
-let g:terraform_align = 1
 let g:terraform_fmt_on_save = 1
 " }}}
 

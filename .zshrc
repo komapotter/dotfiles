@@ -150,3 +150,6 @@ source ~/dev/misc/az.completion
 
 # direnv timeout
 export DIRENV_WARN_TIMEOUT=120s
+
+# fzf
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
