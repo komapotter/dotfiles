@@ -65,10 +65,20 @@ if has('persistent_undo')
 endif
 "}}}
 
-"### tabpage
+" ### Buffer read {{{
+autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
+autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
+set viewoptions-=options
+"}}}
+
+"### tabpage {{{
+nnoremap <silent> <Leader>ts :tabs<CR>
+nnoremap <silent> <Leader>tf :tabfirst<CR>
+nnoremap <silent> <Leader>tl :tablast<CR>
 nnoremap <silent> <Leader>tc :tabnew<CR>
 nnoremap <silent> <Leader>tn :tabnext<CR>
 nnoremap <silent> <Leader>tp :tabprevious<CR>
+"}}}
 
 "### plugins {{{
 call plug#begin('~/.vim/plugged')
@@ -152,7 +162,7 @@ let g:fzf_layout = { 'up': '~40%' }
 "}}}
 
 "### Vaffle {{{
-nnoremap <Leader>ft :Vaffle<CR>
+nnoremap <Leader>f :Vaffle<CR>
 let g:vaffle_auto_cd = 1
 let g:vaffle_show_hidden_files = 1
 
